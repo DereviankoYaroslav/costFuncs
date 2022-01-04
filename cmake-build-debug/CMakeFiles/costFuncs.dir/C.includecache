@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/yarik/CLionProjects/costFuncs/main.c
+stdio.h
+-
+stdlib.h
+-
+windows.h
+-
+time.h
+-
+pthread.h
+-
+math.h
+-
+

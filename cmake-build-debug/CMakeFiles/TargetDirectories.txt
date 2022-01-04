@@ -1,0 +1,3 @@
+C:/Users/yarik/CLionProjects/costFuncs/cmake-build-debug/CMakeFiles/costFuncs.dir
+C:/Users/yarik/CLionProjects/costFuncs/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/yarik/CLionProjects/costFuncs/cmake-build-debug/CMakeFiles/rebuild_cache.dir
