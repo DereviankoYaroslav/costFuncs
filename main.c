@@ -151,6 +151,8 @@ long long costFunctionPicek(int *sbox, int size, int count);
 
 long raiseToPowerLong(int num, int pow);
 
+long long costFunctionCuba(int *sbox, int size, int count);
+
 int aesSbox[] = {99, 124, 119, 123, 242, 107, 111, 197, 48, 1, 103, 43, 254, 215, 171, 118, 202, 130, 201, 125, 250,
                        89, 71, 240, 173, 212, 162, 175, 156, 164, 114, 192, 183, 253, 147, 38, 54, 63, 247, 204, 52, 165,
                        229, 241, 113, 216, 49, 21, 4, 199, 35, 195, 24, 150, 5, 154, 7, 18, 128, 226, 235, 39, 178, 117,
@@ -177,6 +179,9 @@ int main(int args, char **argv) {
 
     long long cost = costFunctionPicek(ar7,size,n);
     printf("\ncost by Picek = %lld", cost);
+
+    long long costCuba = costFunctionCuba(ar7,size,n);
+    printf("\ncost by Cuba = %lld", costCuba);
 
     /*int *ar10 = linearCombinations(ar7, size, n);
     printf("\nLINEAR COMBINATION OF BOOLEAN FUNCTIONS\n");
@@ -2605,6 +2610,52 @@ long long costFunctionPicek(int *sbox, int size, int count) {
     }
     free(costArray);*/
     free(ar1);
+    return res;
+}
+
+//Функція "вартості" S-Box'у з Cuba
+
+long long costFunctionCuba(int *sbox, int size, int count) {
+    long long res = 0;
+    int X1 = 21;
+    int R1 = 7;
+    long long calc = 1;
+    int C [] = {0,4,8,12,16,20,24,28,32};
+    for (int i = 0; i < count; ++i) {
+        int *fxarr = HadamardCoefficients(sbox + i * size, size, count);
+        /*printf("\nHADAMARD COEFFICIENTS");
+        printf("\n");
+        for (int q = 0; q < size; ++q) {
+            printf("%d ", fxarr[q]);
+        }*/
+        for (int j = 0; j < size; ++j) {
+            printf (" %d ", fxarr[j]);
+            for (int k = 0; k < 9; ++k){
+                long long w = abs(abs(fxarr[j]) - C[k]);
+                //printf("w=  %d ", w);
+                calc = calc*w;
+                //printf("calc=  %d ", calc);
+            }
+            //printf(" %d ", w);
+            res += calc;
+            calc = 1;
+            //printf("res = %lld ", res);
+        }
+        printf("\n");
+        free(fxarr);
+    }
+    /*int cost;
+    cost = costArray[0];
+    //printf("\n");
+    //printf("\nCOST ARRAY");
+    //printf("\n");
+    for (int t = 0; t < size - 1; ++t) {
+        //printf("%d ", costArray[t]);
+        if (costArray[t] > cost) {
+            cost = costArray[t];
+        }
+    }
+    free(costArray);*/
     return res;
 }
 
