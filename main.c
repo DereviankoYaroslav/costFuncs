@@ -1447,11 +1447,11 @@ int costFunction(int *sbox, int size, int count) {
             temp[j] = ar1[i * size + j];
         }
         int *fxarr = HadamardCoefficients(temp, size, count);
-        printf("\nHADAMARD COEFFICIENTS");
+        /*printf("\nHADAMARD COEFFICIENTS");
         printf("\n");
         for (int q = 0; q < size; ++q) {
             printf("%d ", fxarr[q]);
-        }
+        }*/
         int max1 = HadamardMax(fxarr, size);
         //printf("\n max = %d", max1);
         costArray[i] = max1;
@@ -1464,7 +1464,6 @@ int costFunction(int *sbox, int size, int count) {
     //printf("\nCOST ARRAY");
     //printf("\n");
     for (int t = 0; t < size - 1; ++t) {
-        //printf("%d ", costArray[t]);
         if (costArray[t] > cost) {
             cost = costArray[t];
         }
@@ -1567,16 +1566,16 @@ long long costFunctionCuba(int *sbox, int size, int count) {
     return res;
 }
 
+//Функція "вартості" S-Box'у з Cuba (розрахунок за лінійними комбінаціями)
+
 long long costFunctionCubaLinComb(int *sbox_d, int size, int count) {
     long long res = 0;
     long long calc = 1;
     int C [] = {0,4,8,12,16,20,24,28,32};
     int *sbox_b = SBoxToBooleanFunc(sbox_d,size,count);
-    //int *costArray = calloc(size - 1, sizeof(int));
     int *ar1 = linearCombinations(sbox_b, size, count);
     for (int i = 0; i < size - 1; ++i) {
         int *temp = calloc(size, sizeof(int));
-        //printf("\nCombination %d", i+1);
         for (int j = 0; j < size; ++j) {
             temp[j] = ar1[i * size + j];
         }
@@ -1587,33 +1586,16 @@ long long costFunctionCubaLinComb(int *sbox_d, int size, int count) {
             printf("%d ", fxarr[q]);
         }*/
         for (int j = 0; j < size; ++j) {
-            //printf (" %d ", fxarr[j]);
             for (int k = 0; k < 9; ++k){
                 long long w = abs(abs(fxarr[j]) - C[k]);
-                //printf("w=  %d ", w);
                 calc = calc*w;
-                //printf("calc=  %d ", calc);
             }
-            //printf(" %d ", w);
             res += calc;
             calc = 1;
-            //printf("res = %lld ", res);
         }
         free(fxarr);
         free(temp);
     }
-    /*int cost;
-    cost = costArray[0];
-    //printf("\n");
-    //printf("\nCOST ARRAY");
-    //printf("\n");
-    for (int t = 0; t < size - 1; ++t) {
-        //printf("%d ", costArray[t]);
-        if (costArray[t] > cost) {
-            cost = costArray[t];
-        }
-    }
-    free(costArray);*/
     free(ar1);
     return res;
 }
